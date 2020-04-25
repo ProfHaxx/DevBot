@@ -1,0 +1,16 @@
+{
+  "name": "devbot",
+  "version": "1.0.0",
+  "description": "A Discord Bot which is the core for all HaxxBots.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ProfHaxx",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "opusscript": "0.0.7",
+    "ytdl-core": "^1.0.5"
+  }
+}
