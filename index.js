@@ -1,6 +1,6 @@
 const {Client, RichEmbed} = require('discord.js');
 const ytdl = require("ytdl-core");
-const secret = require('bot-secret');
+const secret = require('./bot-secret');
 
 const client = new Client();
 
@@ -53,9 +53,11 @@ function playList(list, msg) {
         msg.channel.send("You must be in a Voice Channel to play a song!");
         return;
     }
+    
     if(!servers[msg.guild.id]) servers[msg.guild.id] = {
         queue: []
     }
+    
     var server = servers[msg.guild.id];
     //Load 10 Random Tracks
     for(i = 0; i < 10; i++) {
@@ -68,6 +70,13 @@ function playList(list, msg) {
     });
 }
 
+
+client.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
+  if (!channel) return;
+  channel.send(`Welcome to the server, ${member}`);
+});
+
 client.on('message', msg => {
     /*For commands*/
     if(msg.content.charAt(0) == prefix) {
@@ -76,19 +85,19 @@ client.on('message', msg => {
 			case 'help':
 				msg.reply(
 						"\n[Help]\n" +
-						"+help        -> Shows this list.\n" + 
-						"+ping        -> Displays Connection Speed to the Server\n" + 
-						"+dev         -> Shows the Developer\n" + 
-						"+info [args] -> Prints information for the supplied argument\n" + 
-						"+play [link] -> Plays Music from YouTube\n" + 
-						"+skip        -> Skips current Song\n" + 
-						"+stop        -> Stops Music");
+						prefix+"help        -> Shows this list.\n" + 
+						prefix+"ping        -> Displays Connection Speed to the Server\n" + 
+						prefix+"dev         -> Shows the Developer\n" + 
+						prefix+"info [args] -> Prints information for the supplied argument\n" + 
+						prefix+"play [link] -> Plays Music from YouTube\n" + 
+						prefix+"skip        -> Skips current Song\n" + 
+						prefix+"stop        -> Stops Music");
 				break;
             case 'ping':
                 msg.channel.send("Pong!");
                 break;
             case 'dev':
-                msg.channel.send("ProfHaxx");
+                msg.channel.send("Developer: ProfHaxx");
                 break;
 			case 'suggest':
 				suggestions.push(msg.content);
