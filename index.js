@@ -1,15 +1,14 @@
 const {Client, RichEmbed} = require('discord.js');
 const ytdl = require("ytdl-core");
+const secret = require('bot-secret');
 
 const client = new Client();
 
-const token = 'NjU4OTgwNDI4NzMyMDM5MTg5.XgHpYQ.oirkY-xDMddWloBCRUX05BDbNcw';
+const token = secret.token;
 const name = 'Quorra'; //Ava, Ash, Roy, Jason
 
-const prefix = "+";
-
+const prefix = "!";
 var servers = {};
-
 var suggestions = [];
 
 client.on('ready', () => {
