@@ -21,6 +21,11 @@ client.on('ready', () => {
     dev
     info (version/bot/server/self)
     clear [num]
+    version
+    suggest [suggestion]
+    play [link]
+    skip
+    stop
 */
 
 /*
@@ -73,6 +78,12 @@ function playList(list, msg) {
         play(connection, msg);
     });
 }
+
+function byAdmin(msg) {
+    role = msg.member.roles.highest.name;
+    return role === "Death Lord" || role === "Developer" || role === "Teacher";
+}
+
 
 client.on('guildMemberAdd', member => {
   const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
@@ -138,9 +149,14 @@ client.on('message', msg => {
                         break;
                 }
                 break;
+            //Admin Only
             case 'clear':
-                if(!args[1]) return msg.reply('Error: Missing second argument');
-                msg.channel.bulkDelete(args[1]);
+                if(byAdmin(msg)) {
+                    if(!args[1]) return msg.reply('Error: Missing second argument');
+                    msg.channel.bulkDelete(args[1]);
+                } else {
+                    msg.channel.send("You must be an Admin to use this command.");
+                }
                 break;
             case 'play':
                 var patt = /https:\/\/www.youtube.com\/watch\?v=/g;
